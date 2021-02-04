@@ -1,0 +1,31 @@
+<div class="page-header">
+  <%= link_to new_marca_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Marca
+  <% end %>
+  <h1>Listing marcas</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Nome</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @marcas.each do |marca| %>
+        <%= content_tag :tr, id: dom_id(marca), class: dom_class(marca) do %>
+                      <td><%= marca.nome %></td>
+                    <td><%= link_to 'Show', marca %></td>
+          <td><%= link_to 'Edit', edit_marca_path(marca) %></td>
+          <td><%= link_to 'Destroy', marca, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
