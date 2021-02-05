@@ -1,4 +1,4 @@
-class ReservasController < ApplicationController
+class ReservasController < AdministradorsController
   before_action :set_reserva, only: %i[ show edit update destroy ]
 
   # GET /reservas or /reservas.json
