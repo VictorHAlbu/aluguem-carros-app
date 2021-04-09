@@ -1,4 +1,5 @@
 class LoginAdmistradorController < ApplicationController
+  layout 'login'
   skip_before_action :verify_authenticity_token
   
   def login
@@ -12,7 +13,7 @@ class LoginAdmistradorController < ApplicationController
     end
   end
 
-  def sair
+  def logout
     cookies[:administrador] = nil
     redirect_to "/administrador/login"
   end 

@@ -10,43 +10,6 @@ class ReservasController < AdministradorsController
   def show
   end
 
-  # GET /reservas/new
-  def new
-    @reserva = Reserva.new
-  end
-
-  # GET /reservas/1/edit
-  def edit
-  end
-
-  # POST /reservas or /reservas.json
-  def create
-    @reserva = Reserva.new(reserva_params)
-
-    respond_to do |format|
-      if @reserva.save
-        format.html { redirect_to @reserva, notice: "Reserva was successfully created." }
-        format.json { render :show, status: :created, location: @reserva }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @reserva.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /reservas/1 or /reservas/1.json
-  def update
-    respond_to do |format|
-      if @reserva.update(reserva_params)
-        format.html { redirect_to @reserva, notice: "Reserva was successfully updated." }
-        format.json { render :show, status: :ok, location: @reserva }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @reserva.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /reservas/1 or /reservas/1.json
   def destroy
     @reserva.destroy
