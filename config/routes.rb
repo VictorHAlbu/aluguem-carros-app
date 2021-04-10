@@ -1,4 +1,6 @@
 Rails.application.routes.draw do 
+  get 'loja/index'
+  resources :usuarios, except: [:show]
   get 'administrador/login', to:'login_admistrador#login'
   post 'administrador/logar', to: 'login_admistrador#logar'
   get 'administrador/sair', to: 'login_admistrador#logout'
@@ -7,6 +9,6 @@ Rails.application.routes.draw do
   resources :clientes
   resources :veiculos
   resources :marcas
-  root "veiculos#index"
+  root "loja#index"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

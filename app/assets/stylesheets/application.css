@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+.formUsuario {
+  max-width: 450px;
+  margin: auto;
+}

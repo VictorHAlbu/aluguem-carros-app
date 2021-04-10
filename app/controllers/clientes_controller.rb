@@ -1,6 +1,13 @@
 class ClientesController < AdministradorsController
   before_action :set_cliente, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
+  def authenticate_user!
+    if cookies[:usuario].blank?
+      redirect_to "/administrador/login"
+    end
+  end
+  
   # GET /clientes or /clientes.json
   def index
     @clientes = Cliente.all
