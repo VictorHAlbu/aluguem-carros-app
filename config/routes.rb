@@ -1,5 +1,10 @@
 Rails.application.routes.draw do 
-  get 'loja/index'
+  get 'login/sigin'
+  get 'login/cadastrar'
+  get 'login/', to: 'login#login'
+  post 'logar', to: 'login#logar'
+  get 'loja/index', to: 'loja#index'
+  get 'login/logout', to: 'login#logout'
   resources :usuarios, except: [:show]
   get 'administrador/login', to:'login_admistrador#login'
   post 'administrador/logar', to: 'login_admistrador#logar'

@@ -18,3 +18,9 @@
   max-width: 450px;
   margin: auto;
 }
+
+.detalhesVeiculos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

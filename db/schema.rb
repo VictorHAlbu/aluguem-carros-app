@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_10_155232) do
+ActiveRecord::Schema.define(version: 2021_04_11_175459) do
 
   create_table "administradors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "nome"
@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(version: 2021_04_10_155232) do
     t.string "estado"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "login"
+    t.string "senha"
   end
 
   create_table "veiculos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
