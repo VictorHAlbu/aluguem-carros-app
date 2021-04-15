@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'login/', to: 'login#login'
   post 'logar', to: 'login#logar'
   get 'loja/index', to: 'loja#index'
+  get '/loja/locacao/:id', to: 'loja#aluguel'
   get 'login/logout', to: 'login#logout'
   resources :usuarios, except: [:show]
   get 'administrador/login', to:'login_admistrador#login'

@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <p><%= @veiculo.nome %></p>
+            <img src="https://www.chevrolet.com.br/content/dam/chevrolet/mercosur/brazil/portuguese/index/cars/cars-subcontent/04-images/novo-onix-branco-summit.png" 
+            style="max-width: 250px;">
+       </div>
+      <div class="col-lg-6 detalhesContainer">  
+            <div class="detalhesVeiculo">
+                <p class="card-text">Quantidade de Passageiross:</p>
+                <p><%= @veiculo.qnt_passageiros %></p>
+            </div>
+            <div class="detalhesVeiculo">
+                <p class="card-text">Marca:</p>
+                <p><%= @veiculo.marca.nome %></p>
+            </div>
+            <div class="detalhesVeiculo">
+                <p class="card-text">Cor:</p>
+                <p><%= @veiculo.cor %></p>
+            </div>
+          </div>
+      </div>
+</div>
+
+<style> 
+    .detalhesContainer{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    }
+
+    .detalhesContainer .card-text{
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+    .row{
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	max-width: 100%;
+	margin: 20px;
+	overflow: hidden;
+    width: 700px;
+    }
+    .col-lg-4{
+	background-color: #2A265F;
+	color: #fff;
+	padding: 30px;
+	max-width: 250px;
+    }
+    
+    .course-info {
+	padding: 30px;
+	position: relative;
+	width: 100%;
+    }
+
+</style>
