@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'loja/index', to: 'loja#index'
   get '/loja/locacao/:id', to: 'loja#aluguel'
   get 'login/logout', to: 'login#logout'
+  get '/confirmacao_pagamento', to: 'login#confirmacao_pagamento'
   resources :usuarios, except: [:show]
   get 'administrador/login', to:'login_admistrador#login'
   post 'administrador/logar', to: 'login_admistrador#logar'
