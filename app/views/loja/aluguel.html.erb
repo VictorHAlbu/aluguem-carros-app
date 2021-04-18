@@ -1,28 +1,63 @@
 <div class="container">
     <div class="row">
-        <div class="col-lg-4">
-            <p><%= @veiculo.nome %></p>
-            <img src="https://www.chevrolet.com.br/content/dam/chevrolet/mercosur/brazil/portuguese/index/cars/cars-subcontent/04-images/novo-onix-branco-summit.png" 
-            style="max-width: 250px;">
-       </div>
-      <div class="col-lg-6 detalhesContainer">  
-            <div class="detalhesVeiculo">
-                <p class="card-text">Quantidade de Passageiross:</p>
-                <p><%= @veiculo.qnt_passageiros %></p>
-            </div>
-            <div class="detalhesVeiculo">
-                <p class="card-text">Marca:</p>
-                <p><%= @veiculo.marca.nome %></p>
-            </div>
-            <div class="detalhesVeiculo">
-                <p class="card-text">Cor:</p>
-                <p><%= @veiculo.cor %></p>
-            </div>
+            <div class="col-lg-4">
+                <p><%= @veiculo.nome %></p>
+                <img src="https://www.chevrolet.com.br/content/dam/chevrolet/mercosur/brazil/portuguese/index/cars/cars-subcontent/04-images/novo-onix-branco-summit.png" 
+                style="max-width: 250px;">
+             </div>
+                <div class="col-lg-6 detalhesContainer">  
+                    <div class="detalhesVeiculo">
+                         <p class="card-text">Qtd de Passageiros:</p>
+                         <p><%= @veiculo.qnt_passageiros %></p>
+                    </div>
+                <div class="detalhesVeiculo">
+                    <p class="card-text">Marca:</p>
+                    <p><%= @veiculo.marca.nome %></p>
+                </div>
+                <div class="detalhesVeiculo">
+                    <p class="card-text">Cor:</p>
+                    <p><%= @veiculo.cor %></p>
+                </div>
+                <div class="pagamentoContanier">
+                    <form action="/alugar/<%= @veiculo.id %>" method="POST">
+                      <div class=""> 
+                          <span style="font-weight: bold;">Valor do Veículo</span>
+                          <span style="font-weight: bold; " id="valorTotal"><%= number_to_currency(@veiculo.valor) %></span>
+                      </div>
+                      <input type="submit" value="Alugar" class="btn btn-success">
+                    </form>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Qtd Dias</label>
+                    <select id="dias" class="form-control" onchange="atualizaTotal(<%= @veiculo.valor %>)">
+                      <option selected>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                </select>
           </div>
       </div>
 </div>
 
+<script>
+    function atualizaTotal(valorVeiculo) {
+        const qtdDias = document.getElementById('dias').value 
+        document.getElementById('valorTotal').innerText =  `R$: ${Number(qtdDias * valorVeiculo)}`;
+        
+    }
+</script>
+
 <style> 
+    /* .ofertasInfo{
+        padding-left: 5%;
+    }
+
+    .ofertasInfo p, .ofertasInfo h4{
+        color: blue;
+    } */
+
     .detalhesContainer{
     display: flex;
     justify-content: space-around;
@@ -43,12 +78,12 @@
 	overflow: hidden;
     width: 700px;
     }
-    .col-lg-4{
+    /* .col-lg-4{
 	background-color: #2A265F;
 	color: #fff;
-	padding: 30px;
+	padding: 20px;
 	max-width: 250px;
-    }
+    } */
     
     .course-info {
 	padding: 30px;
