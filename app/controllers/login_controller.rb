@@ -10,7 +10,7 @@ class LoginController < UsuariosController
   end
 
   def logar
-    usuario = Usuario.login(params[:login], params[:senha])
+    usuario = Cliente.login(params[:login], params[:senha])
     if usuario.present?
         cookies[:usuario] = usuario.nome
         redirect_to "/"

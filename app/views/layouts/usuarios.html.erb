@@ -33,7 +33,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<%= cookies[:usuario].present? ?  '/usuarios/#{cookies[:usuario]}/edit' : '/login' %>"><%= cookies[:usuario].present? ?  'Alterar dados' : 'Logue-se' %></a>
+          <a class="nav-link" href="<%= cookies[:usuario].present? ?  '/usuarios/#{:usuario_id}/edit' : '/login' %>"><%= cookies[:usuario].present? ?  'Alterar dados' : 'Logue-se' %></a>
         </li>
         <% if cookies[:usuario].present? %>
           <li class="nav-item">

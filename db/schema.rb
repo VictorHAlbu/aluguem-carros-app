@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_11_175459) do
+ActiveRecord::Schema.define(version: 2021_04_23_131403) do
 
   create_table "administradors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "nome"
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 2021_04_11_175459) do
 
   create_table "reservas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "veiculo_id", null: false
-    t.bigint "cliente_id", null: false
     t.integer "tempo_de_espera"
     t.decimal "valor_alugado", precision: 10
     t.datetime "reservado_de"
@@ -46,7 +45,9 @@ ActiveRecord::Schema.define(version: 2021_04_11_175459) do
     t.boolean "pagamento_no_destino"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["cliente_id"], name: "index_reservas_on_cliente_id"
+    t.bigint "usuario_id"
+    t.string "status"
+    t.index ["usuario_id"], name: "index_reservas_on_usuario_id"
     t.index ["veiculo_id"], name: "index_reservas_on_veiculo_id"
   end
 
@@ -75,7 +76,7 @@ ActiveRecord::Schema.define(version: 2021_04_11_175459) do
     t.index ["marca_id"], name: "index_veiculos_on_marca_id"
   end
 
-  add_foreign_key "reservas", "clientes"
+  add_foreign_key "reservas", "usuarios"
   add_foreign_key "reservas", "veiculos"
   add_foreign_key "veiculos", "marcas"
 end

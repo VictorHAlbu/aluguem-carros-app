@@ -7,6 +7,7 @@ gem 'binding_of_caller'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'autoprefixer-rails'
 gem 'jquery-rails'
+gem 'credit_card_validator', '~> 1.3', '>= 1.3.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'

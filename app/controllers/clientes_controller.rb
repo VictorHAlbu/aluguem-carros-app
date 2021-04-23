@@ -1,6 +1,6 @@
 class ClientesController < AdministradorsController
   before_action :set_cliente, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:new, :create, :index]
 
   def authenticate_user!
     if cookies[:usuario].blank?

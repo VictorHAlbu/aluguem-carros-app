@@ -1,0 +1,74 @@
+<div class="container">
+    <div class="row">
+        <form action="/confirmacao_pagamento" method="POST">
+            <div class="col-lg-4", style="font-weight: bold;">
+                <p><%= @reserva.veiculo.nome %></p>
+                <img src="https://www.chevrolet.com.br/content/dam/chevrolet/mercosur/brazil/portuguese/index/cars/cars-subcontent/04-images/novo-onix-branco-summit.png" 
+                style="max-width: 250px;">
+             </div>
+             <div class="col-lg-6 detalhesContainer">
+                <div class="pagamentoContanier">
+                      <input type="submit" value="Confirmar" class="btn btn-success">
+                      </div>
+                    </form>
+                </div>
+                <div class="form-group col-md-2", style="font-weight: bold;">
+                    <p class="card-text">De:</p>
+                    <p><%= @reserva.reservado_de.strftime("%d/%m/%Y") %></p>
+                </div>
+                <div class="form-group col-md-2", style="font-weight: bold;">
+                    <p class="card-text">Ate:</p>
+                    <p><%= @reserva.reservado_ate.strftime("%d/%m/%Y") %></p>
+                </div>
+                <div class="", style="font-weight: bold;">
+                    <p class="card-text">Valor Total:</p>
+                    <p><%= number_to_currency(@reserva.valor_alugado) %></p>
+                </div>
+            </div>    
+      </div>
+</div>
+
+
+<style> 
+    /* .ofertasInfo{
+        padding-left: 5%;
+    }
+
+    .ofertasInfo p, .ofertasInfo h4{
+        color: blue;
+    } */
+
+    .detalhesContainer{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    }
+
+    .detalhesContainer .card-text{
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+    .row{
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	max-width: 100%;
+	margin: 20px;
+	overflow: hidden;
+    width: 700px;
+    }
+    .col-lg-4{
+	background-color: #2A265F;
+	color: #fff;
+	padding: 20px;
+	max-width: 250px;
+    }
+    
+    .course-info {
+	padding: 30px;
+	position: relative;
+	width: 100%;
+    }
+
+</style>
