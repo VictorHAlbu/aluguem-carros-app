@@ -1,7 +1,9 @@
 class LojaController < UsuariosController
+  include HTTParty
   before_action :set_veiculos, only: [:aluguel, :alugar]
   skip_before_action :verify_authenticity_token, only: :alugar
-
+  before_action :set_token_pagamento, only: :aluguel
+  
   def index
   end
 
@@ -31,6 +33,14 @@ class LojaController < UsuariosController
   end
 
   private
+
+  def set_token_pagamento
+   response = HTTParty.post("https://ws.sandbox.pagseguro.uol.com.br/v2/sessions?email=vh12albuquerque@gmail.com&token=46BBC7899BEF485390BD3013A63B7DB9")
+    if (200..299).include?(response.code)
+      @session_id = response.parsed_response["session"]["id"]
+    end
+  end
+
   def set_veiculos
     @veiculo = Veiculo.find(params[:id])
   end
