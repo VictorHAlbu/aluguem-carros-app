@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'administrador/login', to:'login_admistrador#login'
   post 'administrador/logar', to: 'login_admistrador#logar'
   get 'administrador/sair', to: 'login_admistrador#logout'
+  resources :usuarios_administradors
   resources :administradors
   resources :reservas, only: [:index, :show]
   resources :clientes

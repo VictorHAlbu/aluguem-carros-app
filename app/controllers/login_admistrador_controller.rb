@@ -3,6 +3,9 @@ class LoginAdmistradorController < ApplicationController
   skip_before_action :verify_authenticity_token
   
   def login
+    if cookies[:administrador].present?
+      redirect_to '/administradors'
+    end
   end
 
   def logar
