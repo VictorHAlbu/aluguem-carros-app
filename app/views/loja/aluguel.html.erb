@@ -45,7 +45,7 @@
         <div class="form-group">
             <%= label_tag :cardNumber, "Numero do Cartão", class: "col-sm-2 control-label" %>
             <div class="col-sm-10">
-            <input type="number" class="form-control" name="cardNumber">
+            <input type="number" class="form-control" name="cardNumber" id="cardNumber">
             </div>
         </div>
         <div class="form-group">
@@ -57,7 +57,7 @@
         <div class="form-group">
             <%= label_tag :expitionDate, "Data de Validade", class: "col-sm-2 control-label" %>
             <div class="col-sm-10">
-            <input type="date" class="form-control" name="expitionDate">
+            <input type="date" class="form-control" name="expitionDate" id="expirationDate">
             </div>
         </div>
         <div class="form-group">
@@ -67,34 +67,140 @@
             </div>
         </div>
 </div>
+<div class='loaderContainer' style='display: none;'>
+    <div class="loader"></div>
+  </div>
 </form>
 <script>
-    function atualizaTotal(valorVeiculo) {
-        const qtdDias = document.getElementById('dias').value 
-        document.getElementById('valorTotal').innerText =  `R$: ${Number(qtdDias * valorVeiculo)}`;
-        
-    }
-    
-    PagSeguroDirectPayment.setSessionId("<%= @session_id %>");
-    function finalizarPagamento(e, valor_veiculo) {
-        e.preventDefault
-        const qtdDias = document.getElementById('dias').value 
-        const valorTotal = valor_veiculo * qtdDias;
-        
-        PagSeguroDirectPayment.getPaymentMethods({
-                amount: valorTotal,
-                success: function(response) {
-                    //console.log(JSON.stringify(response));
-                    console.log(response);
-                },
-                error: function(response) {
-                    console.log(JSON.stringify(response));
-            },
-                complete: function(response) {
-                    
-            }
-        })
-    }    
+   
+PagSeguroDirectPayment.setSessionId("<%= @session_id %>" );
+
+function atualizaTotal(valorVeiculo) {
+  const qntDias = document.getElementById('dias').value;
+  document.getElementById('valorTotal').innerText = "R$" + parseInt(qntDias) * valorVeiculo;
+}
+
+function finalizaPagamento(e, valor_veiculo, veiculo_id) {
+  e.preventDefault();
+  const cardNumber = document.getElementById('cardNumber').value;
+  if (!cardNumber) {
+    alert("Número do cartão não pode ficar em branco");
+    return;
+  }
+  const cardNumberFiltered = cardNumber.replaceAll('.', '');
+  const bin = cardNumberFiltered.substring(0, 6)
+
+  const cardName = document.getElementById('cardName').value;
+  if (!cardName) {
+    alert("Nome no cartão não pode ficar em branco");
+    return;
+  }
+
+  const expirationDate = document.getElementById('expirationDate').value;
+  if (!expirationDate) {
+    alert("Data de expiração não pode ficar em branco");
+    return;
+  }
+  const expirationMonth = expirationDate.split('-')[1];
+  const expirationYear = expirationDate.split('-')[0];
+
+  const cvv = document.getElementById('cvv').value;
+  if (!cvv) {
+    alert("CVV não pode ficar em branco");
+    return;
+  }
+
+  document.querySelector(".loaderContainer").style.display = "block";
+  const qntDias = document.getElementById('dias').value;
+  const valorTotal = valor_veiculo * qntDias;
+  PagSeguroDirectPayment.getPaymentMethods({
+      amount: valorTotal,
+      success: function(response) {
+        PagSeguroDirectPayment.onSenderHashReady(function(response){
+          if(response.status == 'error') {
+              console.log(response.message);
+              return false;
+          }
+          var hash = response.senderHash;
+          setTimeout(function(){
+            PagSeguroDirectPayment.getBrand({
+              cardBin: bin,
+              success: function(response) {
+                console.log(response)
+                const brand = response.brand.name
+                PagSeguroDirectPayment.getInstallments({
+                    amount: valorTotal,
+                    maxInstallmentNoInterest: 12,
+                    brand: brand,
+                    success: function(response){
+                      console.log(response);
+                      PagSeguroDirectPayment.createCardToken({
+                        cardNumber: cardNumberFiltered, // Número do cartão de crédito
+                        brand: brand, // Bandeira do cartão
+                        cvv: cvv, // CVV do cartão
+                        expirationMonth: expirationMonth, // Mês da expiração do cartão
+                        expirationYear: expirationYear, // Ano da expiração do cartão, é necessário os 4 dígitos.
+                        success: function(response) {
+                          <% if @usuario_id.present? %>
+                            $.post("/alugar/" + veiculo_id, {
+                              dias: qntDias,
+                              token: response.card.token,
+                              senderHash: hash,
+                            }, function(data, status) {
+
+                              document.querySelector(".loaderContainer").style.display = "none";
+                              console.log(data);
+                            })
+                          <% else %>
+                            window.location.href = "/login_pagamento?veiculo_id=" +
+                            veiculo_id + 
+                            "&dias=" + qntDias +
+                            "&token=" + response.card.token +
+                            "&senderHash=" + hash
+                          <% end %>
+                          console.log(response);
+                          // Retorna o cartão tokenizado.
+                        },
+                        error: function(response) {
+                          document.querySelector(".loaderContainer").style.display = "none";
+                          alert("Erro ao tentar gerar token de cartão de crédito");
+                        },
+                        complete: function(response) {
+                          console.log(response);
+                          // Callback para todas chamadas.
+                        }
+                      });
+                  },
+                    error: function(response) {
+                      document.querySelector(".loaderContainer").style.display = "none";
+                      alert("Erro ao verificar quantidade de parcelas disponíveis");
+                  },
+                    complete: function(response){
+                      console.log(response);
+                  }
+                });
+              },
+              error: function(response) {
+                document.querySelector(".loaderContainer").style.display = "none";
+                alert("Erro ao checar bandeira de cartão de crédito")
+              },
+              complete: function(response) {
+                //tratamento comum para todas chamadas
+              }
+            });
+          }, 5000)
+      });
+      },
+      error: function(response) {
+        document.querySelector(".loaderContainer").style.display = "none";
+        alert("Erro ao gerar Hash de Pagamento");
+
+      },
+      complete: function(response) {
+
+      }
+  });
+}
 </script>
 
 <style> 
