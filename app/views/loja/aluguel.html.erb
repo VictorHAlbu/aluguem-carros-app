@@ -24,7 +24,7 @@
                           <span style="font-weight: bold;">Valor do Veículo</span>
                           <span style="font-weight: bold; " id="valorTotal"><%= number_to_currency(@veiculo.valor) %></span>
                       </div>
-                      <input type="submit", value="Alugar", class="btn btn-success", onclick="finalizarPagamento(event, <%= @veiculo.valor %>)">
+                      <input type="submit", value="Alugar", class="btn btn-success", onclick="finalizarPagamento(event, <%= @veiculo.valor %>, <%= @veiculo.id %>)">
                     </div>
                 </div>
                 <div class="form-group col-md-4">
@@ -74,13 +74,13 @@
 <script>
    
 PagSeguroDirectPayment.setSessionId("<%= @session_id %>" );
-
 function atualizaTotal(valorVeiculo) {
   const qntDias = document.getElementById('dias').value;
   document.getElementById('valorTotal').innerText = "R$" + parseInt(qntDias) * valorVeiculo;
 }
 
-function finalizaPagamento(e, valor_veiculo, veiculo_id) {
+function finalizarPagamento(e, valor_veiculo, veiculo_id) {
+ debugger
   e.preventDefault();
   const cardNumber = document.getElementById('cardNumber').value;
   if (!cardNumber) {
