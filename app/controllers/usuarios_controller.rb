@@ -1,6 +1,14 @@
 class UsuariosController < ApplicationController
   layout "usuarios"
   before_action :set_usuario, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:login, :logar, :new, :create, :index]
+
+
+  def authenticate_user!
+    if cookies[:usuario].blank?
+      redirect_to "/login"
+    end
+  end
 
   # GET /usuarios or /usuarios.json
   def index

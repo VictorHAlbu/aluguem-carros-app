@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'login/logout', to: 'login#logout'
   post '/alugar/:id', to: 'loja#alugar'
   get '/confirmacao_pagamento/:reserva_id', to: 'loja#confirmacao_pagamento'
+  post 'finalizar_pagamento', to: 'loja#finalizar_pagamento'
   resources :usuarios, except: [:show, :index]
   get 'usuarios', to: 'usuarios_administrador#index'
   get 'administrador/login', to:'login_admistrador#login'

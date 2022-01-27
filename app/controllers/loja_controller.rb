@@ -12,7 +12,6 @@ class LojaController < UsuariosController
   end
 
   def alugar
-    debugger
       if params[:dias].present? && params[:token].present?
         dias = params[:dias].to_i
         token_pagamento = params[:token]
