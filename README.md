@@ -1,24 +1,37 @@
-# README
+# Aluguem Carros App
+Essa é uma aplicação voltada para setor automotivo, onde os usuários poderão alugar carros
+# Tecnologias
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Para desenvolver o projeto foi usado as tecnologias: Ruby on Rails, JavaScript, Mysql2 ea Bootstrap
 
-Things you may want to cover:
+### Pré-requisitos
 
-* Ruby version
+Para rodar o projeto na sua máquina, deve ter instalado o ruby '2.5.8' e o 'rails', '~> 6.0.3' e Postgres
 
-* System dependencies
+```
+gem 'rails', '~> 6.0.3', '>= 6.0.3.5'
+Mysql2 
+```
 
-* Configuration
+Na sua máquina execute os comandos:
+```
+bundle install
+yarn install
+```
 
-* Database creation
+Obs:  
+ 
 
-* Database initialization
+Em seguida crie sua base de dados com comandos:
 
-* How to run the test suite
+```
+rails db:create
+rails db:migrate
+```
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+Para subir o projeto local execute:
+```
+rails s
+```
 
-* ...
